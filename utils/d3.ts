@@ -57,15 +57,16 @@ export const d3Nodes = (svg, nodes) => {
  */
 export const onTick = (conns, nodes, subnodes) => {
   const d = conn => [
-    'M',
-    conn.source.x,
-    conn.source.y,
-    'Q',
-    conn.source.x,//+ (conn.curve && conn.curve.x ? conn.curve.x : 0),
-    conn.source.y,//+ (conn.curve && conn.curve.y ? conn.curve.y : 0),
-    ',',
-    conn.target.x,
-    conn.target.y
+    `M${conn.source.x},${conn.source.y} C${(conn.target.x-conn.source.x)/3},${conn.source.y} ${conn.source.x + (conn.target.x-conn.source.x)/3},${conn.target.y} ${conn.target.x},${conn.target.y}`
+    // 'M',
+    // conn.source.x,
+    // conn.source.y,
+    // 'Q',
+    // conn.source.x,//+ (conn.curve && conn.curve.x ? conn.curve.x : 0),
+    // conn.source.y,//+ (conn.curve && conn.curve.y ? conn.curve.y : 0),
+    // ',',
+    // conn.target.x,
+    // conn.target.y
   ].join(' ')
   
 

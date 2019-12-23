@@ -17,5 +17,5 @@ export default (node) => {
     emoji = ''
   }
 
-  return `<div style="height:100px;width:250px;border:4px solid yellow;border-radius: 15px;padding: 20px;"><div class="options">add, remove</div><a id="node-${node.index}" ${href}>${node.text || ''} ${emoji}</a></div>`;
+  return `<div style="height:100px;width:250px;background-color:#FFF;border:4px solid yellow;border-radius: 15px;padding: 20px;"><div class="options">add, remove</div><a id="node-${node.index}" ${href}>${node.text || ''} ${emoji}</a></div>`;
 }
