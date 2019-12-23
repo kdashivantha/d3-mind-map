@@ -1,0 +1,29 @@
+{
+  "name": "d3-mind-map",
+  "version": "1.0.0",
+  "description": "mind-map using d3,js",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "predeploy": "parcel build index.html --no-source-maps --public-url ./",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdashivantha/d3-mind-map.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kdashivantha/d3-mind-map/issues"
+  },
+  "homepage": "https://github.com/kdashivantha/d3-mind-map#readme",
+  "devDependencies": {
+    "gh-pages": "^2.1.1",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.7.3"
+  }
+}
