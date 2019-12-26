@@ -28,7 +28,9 @@
     "typescript": "^3.7.3"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.0",
     "@types/d3": "^5.7.2",
-    "d3": "^5.14.2"
+    "d3": "^5.14.2",
+    "uuid": "^3.3.3"
   }
 }

@@ -17,5 +17,11 @@ export default (node) => {
     emoji = ''
   }
 
-  return `<div style="height:100px;width:250px;background-color:#FFF;border:4px solid yellow;border-radius: 15px;padding: 20px;"><div class="options">add, remove</div><a id="node-${node.index}" ${href}>${node.text || ''} ${emoji}</a></div>`;
+  return `<div class="node-body" style="height:100px;width:250px;background-color:#FFF;border:4px solid yellow;border-radius: 15px;">
+  <div class="options">
+  <div class="option add-item"><i class="fas fa-plus-square"></i></div>
+  <div class="option edit-item"><i class="fas fa-pencil-alt"></i></div>
+  <div class="option remove-item"><i class="fas fa-trash-alt"></i></div>
+  </div>
+  <a id="node-${node.index}" ${href}>${node.text || ''} ${emoji}</a></div>`;
 }

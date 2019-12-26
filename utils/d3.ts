@@ -57,17 +57,16 @@ export const d3Nodes = (svg, nodes) => {
  */
 export const onTick = (conns, nodes, subnodes) => {
   const d = conn => [
-    `M${conn.source.x},${conn.source.y} C${(conn.target.x-conn.source.x)/3},${conn.source.y} ${conn.source.x + (conn.target.x-conn.source.x)/3},${conn.target.y} ${conn.target.x},${conn.target.y}`
-    // 'M',
-    // conn.source.x,
-    // conn.source.y,
-    // 'Q',
-    // conn.source.x,//+ (conn.curve && conn.curve.x ? conn.curve.x : 0),
-    // conn.source.y,//+ (conn.curve && conn.curve.y ? conn.curve.y : 0),
-    // ',',
-    // conn.target.x,
-    // conn.target.y
-  ].join(' ')
+    'M',
+    conn.source.x,',',conn.source.y,
+    ' ',
+    'C',
+    (conn.source.x + conn.target.x)/2,',',conn.source.y,
+    ' ',
+    (conn.source.x + conn.target.x)/2,',',conn.target.y,
+    ' ',
+    conn.target.x,',',conn.target.y
+  ].join('')
   
 
   // Set the connections path.
@@ -132,14 +131,14 @@ export const d3PanZoom = el => (
  * d3 node click event
  */
 export const d3NodeClick = (d,i) => {
-    debugger;
+    event.stopPropagation();
     let target = event.target;
-    // if (d3.event.defaultPrevented) return; // dragged
 
-    // d3.select(this).transition()
-    //     .attr("fill", "black")
-    //     .attr("r", radius * 2)
-    //   .transition()
-    //     .attr("r", radius)
-    //     .attr("fill", d3.schemeCategory10[i % 10]);
+    let eventName = "";
+    switch(target.className){
+      case 'fas fa-plus-square': return 'add';
+      case 'fas fa-pencil-alt': return 'edit';
+      case 'fas fa-trash-alt': return 'remove';
+      break;
+    }
 }

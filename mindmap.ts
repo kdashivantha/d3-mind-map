@@ -16,6 +16,11 @@ import {
     d3NodeClick
 } from './utils/d3';
 
+import { drag, event, zoom, select } from 'd3';
+
+
+import uuidv4 from 'uuid';
+
 import { getDimensions, getViewBox } from './utils/dimensions';
 import subnodesToHTML from './nodeTemplates/subnodesToHTML';
 import nodeToHTML from './nodeTemplates/nodeToHTML';
@@ -30,6 +35,11 @@ export class MindMap {
     editable: boolean = true;
     simulation =  null;
     svg: any = {};
+
+    addOption = null;
+    removeOption = null;
+    editOption = null;
+    
     /**
      *
      */
@@ -38,20 +48,14 @@ export class MindMap {
         this.nodes = data.nodes;
         this.connections = data.connections;
         this.svg = svgEl;
-
-        // Create force simulation to position nodes that have
-        // no coordinate, and add it to the component state
-        this.simulation = forceSimulation()
-        .force('link', forceLink().id(node => (node as any).text))
-        .force('charge', forceManyBody())
-        .force('collide', forceCollide().radius(100));
     }
 
 
     // methods
   prepareNodes () {
     const render = (node) => {
-      node.html = nodeToHTML(node);
+      node.uid = uuidv4();
+      node.html = nodeToHTML(node);  
       //@ts-ignore
       node.nodesHTML = subnodesToHTML(node.nodes);
 
@@ -78,13 +82,16 @@ export class MindMap {
   prepareEditor (svg, conns, nodes, subnodes) {
     nodes
       .attr('class', 'mindmap-node mindmap-node--editable')
+      .attr('id', (d)=> d.uid)
       .on('dbclick', (node) => {
         node.fx = null
         node.fy = null
       });
 
     nodes.call(d3Drag(this.simulation, svg, nodes));
-    nodes.on('click',d3NodeClick);
+    nodes.on('click',(d,i)=> {
+      this.nodeClickEvent(d3NodeClick(d,i),d)
+    });
 
     // Tick the simulation 100 times
     for (let i = 0; i < 100; i += 1) {
@@ -103,6 +110,14 @@ export class MindMap {
    * Render mind map unsing D3
    */
   renderMap () {
+    // Create force simulation to position nodes that have
+    // no coordinate, and add it to the component state
+    this.simulation = forceSimulation()
+    .force('link', forceLink().id(node => (node as any).text))
+    .force('charge', forceManyBody())
+    .force('collide', forceCollide().radius(300));
+
+
     const svg = select(this.svg)
 
     // Clear the SVG in case there's stuff already there.
@@ -139,4 +154,35 @@ export class MindMap {
       .call(d3PanZoom(svg))
       .on('dbClick.zoom', null)
   }
+
+
+  nodeClickEvent(event, node) {
+    switch(event){
+      case 'add': this.addNewNode(node); break;
+      case 'edit': this.editNode(node); break;
+      case 'remove': this.removeNode(node); break;
+    }
+  }
+
+  addNewNode(target) {
+    const nodeId = uuidv4();
+    this.nodes.push({
+      text: nodeId,
+      fx: target.fx,
+      fy: target.fy + 200
+    });
+    this.connections.push({
+      source: target.text,
+      target: nodeId
+    });
+    debugger;
+    this.renderMap();
+  }
+  removeNode(d) {
+
+  }
+  editNode(d) {
+
+  }
+
 }
