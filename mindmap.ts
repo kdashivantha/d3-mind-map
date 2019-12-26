@@ -16,7 +16,7 @@ import {
     d3NodeClick
 } from './utils/d3';
 
-import { drag, event, zoom, select } from 'd3';
+import { drag, event } from 'd3';
 
 
 import uuidv4 from 'uuid';
@@ -113,9 +113,9 @@ export class MindMap {
     // Create force simulation to position nodes that have
     // no coordinate, and add it to the component state
     this.simulation = forceSimulation()
-    .force('link', forceLink().id(node => (node as any).text))
+    .force('link', forceLink().id(node => (node as any).id))
     .force('charge', forceManyBody())
-    .force('collide', forceCollide().radius(300));
+    .force('collide', forceCollide().radius(200));
 
 
     const svg = select(this.svg)
@@ -132,7 +132,7 @@ export class MindMap {
     const connections = d3Connections(svg, this.connections)
     const { nodes, subnodes } = d3Nodes(svg, this.nodes)
 
-    nodes.append('title').text(node => node.note)
+    nodes.append('title').text(node => node.uid)
 
     // Bind nodes and connections to the simulation
     this.simulation
@@ -167,22 +167,25 @@ export class MindMap {
   addNewNode(target) {
     const nodeId = uuidv4();
     this.nodes.push({
-      text: nodeId,
+      id: nodeId,
+      text: "new-node",
       fx: target.fx,
       fy: target.fy + 200
     });
     this.connections.push({
-      source: target.text,
+      source: target.id,
       target: nodeId
     });
-    debugger;
     this.renderMap();
   }
   removeNode(d) {
 
   }
   editNode(d) {
-
+    var nodeTitle = prompt("Title", d.text);
+    if (nodeTitle != null) {
+      d.text = nodeTitle;
+      this.renderMap();
+    }
   }
-
 }

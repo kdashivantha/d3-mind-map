@@ -134,9 +134,8 @@ export const d3NodeClick = (d,i) => {
     event.stopPropagation();
     let target = event.target;
 
-    let eventName = "";
     switch(target.className){
-      case 'fas fa-plus-square': return 'add';
+      case 'fas fa-plus-circle': return 'add';
       case 'fas fa-pencil-alt': return 'edit';
       case 'fas fa-trash-alt': return 'remove';
       break;

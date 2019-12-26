@@ -2,12 +2,14 @@ export default {
   title: "learn anything - programming - programming languages - python",
   nodes: [
     {
+      id: "ab60a5d0-611e-49aa-9278-5b9b1a862cdd",
       text: "python",
       url: "http://www.wikiwand.com/en/Python_(programming_language)",
       fx: -13.916222252976013,
       fy: -659.1641376795345,
       nodes: [
         {
+          id: "61be2afd-816a-4b50-9c46-bee46adf68cc",
           text: "",
           url: "https://www.reddit.com/r/Python/",
           fx: 176.083777747024,
@@ -17,6 +19,7 @@ export default {
           color: "rgba(255, 189, 10, 1.0)"
         },
         {
+          id:"a3814ce9-ee78-431a-b44e-8fcf5d66ef79",
           text: "source",
           note:
             "original python implementation in c, compiles python code into byte code and interprets the byte code in a evaluation loop",
@@ -31,12 +34,14 @@ export default {
       category: "wiki"
     },
     {
+      id: "df788f47-b1d8-41a7-b529-6c24899f4c9f",
       text: "help",
       url: "",
       fx: 154.3247731601375,
       fy: -429.73700786748157,
       nodes: [
         {
+          id:"fe72536e-b6b2-4b88-a9f9-31af5ae78fad",
           text: "awesome python",
           url: "https://github.com/vinta/awesome-python",
           fx: 291.3247731601375,
@@ -44,76 +49,18 @@ export default {
           nodes: [],
           category: "github",
           color: "rgba(175, 54, 242, 1.0)"
-        },
-        {
-          text: "awesome asyncio",
-          url: "https://github.com/timofurrer/awesome-asyncio",
-          fx: 291.3247731601375,
-          fy: -506.23700786748157,
-          nodes: [],
-          category: "github",
-          color: "rgba(36, 170, 255, 1.0)"
-        },
-        {
-          text: "python data model",
-          url: "https://docs.python.org/3/reference/datamodel.html",
-          fx: 291.3247731601375,
-          fy: -466.23700786748157,
-          nodes: [],
-          color: "rgba(255, 189, 10, 1.0)"
-        },
-        {
-          text: "python testing",
-          url: "http://pythontesting.net/framework/pytest/pytest-introduction/",
-          fx: 291.3247731601375,
-          fy: -432.23700786748157,
-          nodes: [],
-          category: "free book",
-          color: "rgba(34, 205, 224, 1.0)"
-        },
-        {
-          text: "scientific python cheat sheet",
-          url: "https://ipgp.github.io/scientific_python_cheat_sheet/",
-          fx: 291.3247731601375,
-          fy: -392.23700786748157,
-          nodes: [],
-          color: "rgba(209, 21, 88, 1.0)"
-        },
-        {
-          text: "structuring your project",
-          url:
-            "http://python-guide-pt-br.readthedocs.io/en/latest/writing/structure/",
-          fx: 291.3247731601375,
-          fy: -358.23700786748157,
-          nodes: [],
-          color: "rgba(49, 187, 71, 1.0)"
-        },
-        {
-          text: "style guide for python code",
-          url: "https://www.python.org/dev/peps/pep-0008/",
-          fx: 291.3247731601375,
-          fy: -324.23700786748157,
-          nodes: [],
-          color: "rgba(175, 54, 242, 1.0)"
-        },
-        {
-          text: "cpython internals  ️",
-          url: "http://pgbovine.net/cpython-internals.htm",
-          fx: 291.3247731601375,
-          fy: -290.23700786748157,
-          nodes: [],
-          category: "article",
-          color: "rgba(36, 170, 255, 1.0)"
         }
       ]
     },
     {
+      id: "9066b5e5-5021-4e65-bb8e-9a1ff702956c",
       text: "articles",
       url: "",
       fx: 455.7839253819375,
       fy: -183.5539283546699,
       nodes: [
         {
+          id: "5389f2e0-26eb-41ea-83e1-4131531fe081",
           text:
             "16: the history behind the decision to move python to github  ️",
           url:
@@ -123,65 +70,21 @@ export default {
           nodes: [],
           category: "article",
           color: "rgba(175, 54, 242, 1.0)"
-        },
-        {
-          text: "15: a modern python development toolchain  ️",
-          url:
-            "http://www.chriskrycho.com/2015/a-modern-python-development-toolchain.html",
-          fx: 617.7839253819375,
-          fy: -183.0539283546699,
-          nodes: [],
-          category: "article",
-          color: "rgba(36, 170, 255, 1.0)"
-        },
-        {
-          text: "17: pythons instance, class, and static methods demystified",
-          url:
-            "https://realpython.com/blog/python/instance-class-and-static-methods-demystified/",
-          fx: 617.7839253819375,
-          fy: -121.05392835466989,
-          nodes: [],
-          category: "article",
-          color: "rgba(255, 189, 10, 1.0)"
         }
       ]
     },
     {
+      id: "4b6bd0db-f2e9-4ab8-a966-aed4413d3da1",
       text: "basics",
       note: "",
       url: "",
       fx: -98.5231997717085,
       fy: -60.07462866512333,
       nodes: [
-        {
-          text: "1. the python tutorial",
-          url: "https://docs.python.org/3/tutorial/",
-          fx: 83.4768002282915,
-          fy: -96.57462866512333,
-          nodes: [],
-          color: "rgba(255, 189, 10, 1.0)"
-        },
-        {
-          text: "1. dive into python 3",
-          url: "http://www.diveintopython3.net",
-          fx: 83.4768002282915,
-          fy: -62.57462866512333,
-          nodes: [],
-          category: "free book",
-          color: "rgba(175, 54, 242, 1.0)"
-        },
-        {
-          text: "1. automate the boring stuff with python",
-          url: "https://automatetheboringstuff.com/",
-          fx: 83.4768002282915,
-          fy: -22.574628665123328,
-          nodes: [],
-          category: "free book",
-          color: "rgba(36, 170, 255, 1.0)"
-        }
       ]
     },
     {
+      id: "9b53fa57-dbcd-4ac3-bca5-637ee9eae957",
       text: "package manager",
       url: "http://www.wikiwand.com/en/Package_manager",
       //fx: -346.2056231217888,
@@ -190,13 +93,15 @@ export default {
       category: "wiki"
     },
     {
-      text: "python libraries  ️",
+      id: "16bb6b97-ab93-4536-ad68-50b95c7d4661",
+      text: "python libraries",
       //fx: -78.69331502906573,
       //fy: 100.14771605920942,
       nodes: [],
       category: "mindmap"
     },
     {
+      id: "e5ab6e94-42e6-498c-b8c0-da34b4cc690b",
       text: "pip",
       url: "https://pypi.python.org/pypi/pip",
       //fx: -317.77054724755226,
@@ -206,28 +111,28 @@ export default {
   ],
   connections: [
     {
-      source: "python",
-      target: "basics"
+      source: "ab60a5d0-611e-49aa-9278-5b9b1a862cdd",
+      target: "4b6bd0db-f2e9-4ab8-a966-aed4413d3da1"
     },
     {
-      source: "help",
-      target: "python"
+      source: "df788f47-b1d8-41a7-b529-6c24899f4c9f",
+      target: "ab60a5d0-611e-49aa-9278-5b9b1a862cdd"
     },
     {
-      source: "basics",
-      target: "python libraries  ️"
+      source: "4b6bd0db-f2e9-4ab8-a966-aed4413d3da1",
+      target: "16bb6b97-ab93-4536-ad68-50b95c7d4661"
     },
     {
-      source: "basics",
-      target: "package manager"
+      source: "4b6bd0db-f2e9-4ab8-a966-aed4413d3da1",
+      target: "9b53fa57-dbcd-4ac3-bca5-637ee9eae957"
     },
     {
-      source: "package manager",
-      target: "pip"
+      source: "9b53fa57-dbcd-4ac3-bca5-637ee9eae957",
+      target: "e5ab6e94-42e6-498c-b8c0-da34b4cc690b"
     },
     {
-      source: "articles",
-      target: "help"
+      source: "9066b5e5-5021-4e65-bb8e-9a1ff702956c",
+      target: "df788f47-b1d8-41a7-b529-6c24899f4c9f"
     }
   ]
 };
