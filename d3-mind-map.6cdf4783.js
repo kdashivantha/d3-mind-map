@@ -1018,4 +1018,4 @@ var e=require("./v1"),r=require("./v4"),v=r;v.v1=e,v.v4=r,module.exports=v;
 },{}],"QCba":[function(require,module,exports) {
 "use strict";var e=this&&this.__assign||function(){return(e=Object.assign||function(e){for(var t,r=1,a=arguments.length;r<a;r++)for(var n in t=arguments[r])Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n]);return e}).apply(this,arguments)},t=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(exports,"__esModule",{value:!0});var r=require("./mindmap"),a=t(require("./data/mapdata"));function n(){var t=e({},a.default),n=document.getElementById("map");new r.MindMap(n,t).renderMap()}n();
 },{"./mindmap":"Gszt","./data/mapdata":"pmax"}]},{},["QCba"], null)
-//# sourceMappingURL=/d3-mind-map.483e25f8.js.map
+//# sourceMappingURL=/d3-mind-map.6cdf4783.js.map

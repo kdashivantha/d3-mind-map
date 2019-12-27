@@ -29240,13 +29240,13 @@ Object.defineProperty(exports, "__esModule", {
  */
 
 exports.getDimensions = function (html, style, classname) {
-  var el = document.createElement('span');
+  var el = document.createElement("span");
   var dimensions = {}; // Set display: inline-block so that the size of el
   // will depend on the size of its children.
 
-  el.style.display = 'inline-block'; // Hide the element (it will be added to the page for a short time).
+  el.style.display = "inline-block"; // Hide the element (it will be added to the page for a short time).
 
-  el.style.visibility = 'hidden';
+  el.style.visibility = "hidden";
   el.className = classname;
   el.innerHTML = html; // Apply CSS rules.
 
@@ -29284,14 +29284,14 @@ exports.getViewBox = function (nodes) {
   });
 
   if (Xs.length === 0 || Ys.length === 0) {
-    return '0 0 0 0';
+    return "0 0 0 0";
   } // Find the smallest coordinates...
 
 
   var min = [Math.min.apply(Math, Xs) - 150, Math.min.apply(Math, Ys) - 150]; // ...and the biggest ones.
 
   var max = [Math.max.apply(Math, Xs) - min[0] + 150, Math.max.apply(Math, Ys) - min[1] + 150];
-  return min.join(' ') + " " + max.join(' ');
+  return min.join(" ") + " " + max.join(" ");
 };
 },{}],"nodeTemplates/nodeToHTML.ts":[function(require,module,exports) {
 "use strict";
@@ -29638,7 +29638,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54801" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55329" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
