@@ -3,9 +3,7 @@ import {
     forceLink,
     forceManyBody,
     forceSimulation,
-    select,
-    zoom,
-    zoomIdentity
+    select
 } from 'd3';
 import {
     d3Connections,
@@ -16,16 +14,11 @@ import {
     d3NodeClick
 } from './utils/d3';
 
-import { drag, event } from 'd3';
-
 
 import uuidv4 from 'uuid';
 
 import { getDimensions, getViewBox } from './utils/dimensions';
-import subnodesToHTML from './nodeTemplates/subnodesToHTML';
 import nodeToHTML from './nodeTemplates/nodeToHTML';
-
-declare const d3: any;
 
 export class MindMap {
 
@@ -56,20 +49,12 @@ export class MindMap {
     const render = (node) => {
       node.uid = uuidv4();
       node.html = nodeToHTML(node);  
-      //@ts-ignore
-      node.nodesHTML = subnodesToHTML(node.nodes);
 
       const dimensions = getDimensions(node.html, {}, 'mindmap-node');
       //@ts-ignore
       node.width = dimensions.width;
       //@ts-ignore
       node.height = dimensions.height;
-
-      const nodesDimensions = getDimensions(node.nodesHTML, {}, 'mindmap-subnodes-text');
-      //@ts-ignore
-      node.nodesWidth = nodesDimensions.width;
-      //@ts-ignore
-      node.nodesHeight = nodesDimensions.height;
     }
 
     this.nodes.forEach(node => render(node))
@@ -79,7 +64,7 @@ export class MindMap {
    * Add new class to nodes, attach drag behevior,
    * and start simulation.
    */
-  prepareEditor (svg, conns, nodes, subnodes) {
+  prepareEditor (svg, conns, nodes) {
     nodes
       .attr('class', 'mindmap-node mindmap-node--editable')
       .attr('id', (d)=> d.uid)
@@ -101,7 +86,7 @@ export class MindMap {
     setTimeout(() => {
       this.simulation
         .alphaTarget(0.5).on('tick', () => (
-          onTick(conns, nodes, subnodes)
+          onTick(conns, nodes)
         ))
     }, 200)
   }
@@ -130,7 +115,7 @@ export class MindMap {
 
     // Bind data to SVG elements and set all the properties to render them
     const connections = d3Connections(svg, this.connections)
-    const { nodes, subnodes } = d3Nodes(svg, this.nodes)
+    const { nodes } = d3Nodes(svg, this.nodes)
 
     nodes.append('title').text(node => node.uid)
 
@@ -140,7 +125,7 @@ export class MindMap {
       .force('link').links(this.connections)
 
     if (this.editable) {
-      this.prepareEditor(svg, connections, nodes, subnodes)
+      this.prepareEditor(svg, connections, nodes)
     }
 
     // Tick the simulation 100 times
@@ -148,22 +133,34 @@ export class MindMap {
       this.simulation.tick()
     }
 
-    onTick(connections, nodes, subnodes)
+    onTick(connections, nodes)
 
     svg.attr('viewBox', getViewBox(nodes.data()))
       .call(d3PanZoom(svg))
       .on('dbClick.zoom', null)
   }
 
-
+  /**
+   * node mouse click events
+   */
   nodeClickEvent(event, node) {
     switch(event){
       case 'add': this.addNewNode(node); break;
       case 'edit': this.editNode(node); break;
       case 'remove': this.removeNode(node); break;
+      case 'click': this.clickNode(node); break;
     }
   }
 
+  /**
+   * click on node text
+   */
+  clickNode(d){
+    alert(`node clicked ;) ==> ${d.text}`);
+  }
+  /**
+   * add new child nodes
+   */
   addNewNode(target) {
     const nodeId = uuidv4();
     this.nodes.push({
@@ -178,11 +175,18 @@ export class MindMap {
     });
     this.renderMap();
   }
+  /**
+   * remove a node
+   * todo: before remove nodes check all link
+   */
   removeNode(d) {
-
+    alert(`node remove clicked ;) ==> ${d.text}`);
   }
+  /**
+   * edit node text
+   */
   editNode(d) {
-    var nodeTitle = prompt("Title", d.text);
+    var nodeTitle = prompt("node text", d.text);
     if (nodeTitle != null) {
       d.text = nodeTitle;
       this.renderMap();

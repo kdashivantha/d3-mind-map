@@ -1,5 +1,4 @@
-import { drag, event, zoom } from 'd3'
-import { getViewBox } from './dimensions'
+import { drag, event, zoom } from 'd3';
 
 /**
  * Bind data to a <TAG>, inside a G element, inside the given root element.
@@ -39,23 +38,15 @@ export const d3Nodes = (svg, nodes) => {
     .attr('height', node => node.height)
     .html(node => node.html);
 
-  const d3subnodes = selection
-    .append('foreignObject')
-    .attr('class', 'mindmap-subnodes')
-    .attr('width', node => node.nodesWidth + 4)
-    .attr('height', node => node.nodesHeight)
-    .html(node => node.nodesHTML);
-
   return {
-    nodes: d3nodes,
-    subnodes: d3subnodes
+    nodes: d3nodes
   }
 }
 
 /**
  * Callback for forceSimulation tick event.
  */
-export const onTick = (conns, nodes, subnodes) => {
+export const onTick = (conns, nodes) => {
   const d = conn => [
     'M',
     conn.source.x,',',conn.source.y,
@@ -76,11 +67,6 @@ export const onTick = (conns, nodes, subnodes) => {
   nodes
     .attr('x', node => node.x - (node.width / 2))
     .attr('y', node => node.y - (node.height / 2))
-
-  // Set subnodes groups color and position.
-  subnodes
-    .attr('x', node => node.x + (node.width / 2))
-    .attr('y', node => node.y - (node.nodesHeight / 2))
 }
 
 /*
@@ -105,8 +91,6 @@ export const d3Drag = (simulation, svg, nodes) => {
     if (!event.active) {
       simulation.alphaTarget(0)
     }
-
-    svg.attr('viewBox', getViewBox(nodes.data()))
   }
 
   return drag()
@@ -114,8 +98,6 @@ export const d3Drag = (simulation, svg, nodes) => {
     .on('drag', dragged)
     .on('end', dragEnd)
 }
-
-/* eslint-enable no-param-reassign */
 
 /*
  * Return pan and zoom behavior to use on d3.selection.call().
@@ -138,6 +120,7 @@ export const d3NodeClick = (d,i) => {
       case 'fas fa-plus-circle': return 'add';
       case 'fas fa-pencil-alt': return 'edit';
       case 'fas fa-trash-alt': return 'remove';
+      case 'node-text': return 'click';
       break;
     }
 }

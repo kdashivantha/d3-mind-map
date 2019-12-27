@@ -3,6 +3,7 @@
  * with a given style would take in the page.
  */
 export const getDimensions = (html, style, classname) => {
+
     const el = document.createElement('span')
     const dimensions = {}
   
@@ -26,7 +27,7 @@ export const getDimensions = (html, style, classname) => {
     //@ts-ignore
     dimensions.height = el.offsetHeight;
   
-    el.remove()
+    //el.remove()
     return dimensions
   }
   
