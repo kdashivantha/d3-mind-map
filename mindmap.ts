@@ -1,161 +1,166 @@
 import {
-    forceCollide,
-    forceLink,
-    forceManyBody,
-    forceSimulation,
-    select
-} from 'd3';
+  forceCollide,
+  forceLink,
+  forceManyBody,
+  forceSimulation,
+  select
+} from "d3";
 import {
-    d3Connections,
-    d3Nodes,
-    d3Drag,
-    d3PanZoom,
-    onTick,
-    d3NodeClick
-} from './utils/d3';
+  d3Connections,
+  d3Nodes,
+  d3Drag,
+  d3PanZoom,
+  onTick,
+  d3NodeClick
+} from "./utils/d3";
 
+import uuidv4 from "uuid";
 
-import uuidv4 from 'uuid';
-
-import { getDimensions, getViewBox } from './utils/dimensions';
-import nodeToHTML from './nodeTemplates/nodeToHTML';
+import { getDimensions, getViewBox } from "./utils/dimensions";
+import nodeToHTML from "./nodeTemplates/nodeToHTML";
 
 export class MindMap {
+  mapEl: any;
+  nodes: any[] = [];
+  connections: any[] = [];
+  editable: boolean = true;
+  simulation = null;
+  svg: any = {};
 
-    mapEl:any;
-    nodes: any[] = [];
-    connections: any[] = [];
-    editable: boolean = true;
-    simulation =  null;
-    svg: any = {};
+  addOption = null;
+  removeOption = null;
+  editOption = null;
 
-    addOption = null;
-    removeOption = null;
-    editOption = null;
-    
-    /**
-     *
-     */
-    constructor(svgEl:any, data:any) {
+  /**
+   *
+   */
+  constructor(svgEl: any, data: any) {
+    this.nodes = data.nodes;
+    this.connections = data.connections;
+    this.svg = svgEl;
+  }
 
-        this.nodes = data.nodes;
-        this.connections = data.connections;
-        this.svg = svgEl;
-    }
-
-
-    // methods
-  prepareNodes () {
-    const render = (node) => {
+  // methods
+  prepareNodes() {
+    const render = node => {
       node.uid = uuidv4();
-      node.html = nodeToHTML(node);  
+      node.html = nodeToHTML(node);
 
-      const dimensions = getDimensions(node.html, {}, 'mindmap-node');
+      const dimensions = getDimensions(node.html, {}, "mindmap-node");
       //@ts-ignore
       node.width = dimensions.width;
       //@ts-ignore
       node.height = dimensions.height;
-    }
+    };
 
-    this.nodes.forEach(node => render(node))
+    this.nodes.forEach(node => render(node));
   }
 
   /**
    * Add new class to nodes, attach drag behevior,
    * and start simulation.
    */
-  prepareEditor (svg, conns, nodes) {
+  prepareEditor(svg, conns, nodes) {
     nodes
-      .attr('class', 'mindmap-node mindmap-node--editable')
-      .attr('id', (d)=> d.uid)
-      .on('dbclick', (node) => {
-        node.fx = null
-        node.fy = null
+      .attr("class", "mindmap-node mindmap-node--editable")
+      .attr("id", d => d.uid)
+      .on("dbclick", node => {
+        node.fx = null;
+        node.fy = null;
       });
 
     nodes.call(d3Drag(this.simulation, svg, nodes));
-    nodes.on('click',(d,i)=> {
-      this.nodeClickEvent(d3NodeClick(d,i),d)
+    nodes.on("click", (d, i) => {
+      this.nodeClickEvent(d3NodeClick(d, i), d);
     });
 
     // Tick the simulation 100 times
     for (let i = 0; i < 100; i += 1) {
-      this.simulation.tick()
+      this.simulation.tick();
     }
 
     setTimeout(() => {
-      this.simulation
-        .alphaTarget(0.5).on('tick', () => (
-          onTick(conns, nodes)
-        ))
-    }, 200)
+      this.simulation.alphaTarget(0.5).on("tick", () => onTick(conns, nodes));
+    }, 200);
   }
 
   /**
    * Render mind map unsing D3
    */
-  renderMap () {
+  renderMap() {
     // Create force simulation to position nodes that have
     // no coordinate, and add it to the component state
     this.simulation = forceSimulation()
-    .force('link', forceLink().id(node => (node as any).id))
-    .force('charge', forceManyBody())
-    .force('collide', forceCollide().radius(200));
+      .force(
+        "link",
+        forceLink().id(node => (node as any).id)
+      )
+      .force("charge", forceManyBody())
+      .force("collide", forceCollide().radius(200));
 
-
-    const svg = select(this.svg)
+    const svg = select(this.svg);
 
     // Clear the SVG in case there's stuff already there.
-    svg.selectAll('*').remove()
+    svg.selectAll("*").remove();
 
     // Add subnode group
-    svg.append('g').attr('id', 'mindmap-subnodes')
+    svg.append("g").attr("id", "mindmap-subnodes");
 
-    this.prepareNodes()
+    this.prepareNodes();
 
     // Bind data to SVG elements and set all the properties to render them
-    const connections = d3Connections(svg, this.connections)
-    const { nodes } = d3Nodes(svg, this.nodes)
+    const connections = d3Connections(svg, this.connections);
+    const { nodes } = d3Nodes(svg, this.nodes);
 
-    nodes.append('title').text(node => node.uid)
+    nodes.append("title").text(node => node.uid);
 
     // Bind nodes and connections to the simulation
     this.simulation
       .nodes(this.nodes)
-      .force('link').links(this.connections)
+      .force("link")
+      .links(this.connections);
 
     if (this.editable) {
-      this.prepareEditor(svg, connections, nodes)
+      this.prepareEditor(svg, connections, nodes);
     }
 
     // Tick the simulation 100 times
     for (let i = 0; i < 100; i += 1) {
-      this.simulation.tick()
+      this.simulation.tick();
     }
 
-    onTick(connections, nodes)
+    onTick(connections, nodes);
 
-    svg.attr('viewBox', getViewBox(nodes.data()))
+    svg
+      .attr("viewBox", getViewBox(nodes.data()))
       .call(d3PanZoom(svg))
-      .on('dbClick.zoom', null)
+      .on("dbClick.zoom", null);
   }
 
   /**
    * node mouse click events
    */
   nodeClickEvent(event, node) {
-    switch(event){
-      case 'add': this.addNewNode(node); break;
-      case 'edit': this.editNode(node); break;
-      case 'remove': this.removeNode(node); break;
-      case 'click': this.clickNode(node); break;
+    switch (event) {
+      case "add":
+        this.addNewNode(node);
+        break;
+      case "edit":
+        this.editNode(node);
+        break;
+      case "remove":
+        this.removeNode(node);
+        break;
+      case "click":
+        this.clickNode(node);
+        break;
     }
   }
 
   /**
    * click on node text
    */
-  clickNode(d){
+  clickNode(d) {
     alert(`node clicked ;) ==> ${d.text}`);
   }
   /**
