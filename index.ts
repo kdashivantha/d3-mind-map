@@ -3,7 +3,7 @@ import map from "./data/mapdata";
 
 function init() {
     let data = {...map};
-    let svgEl = document.getElementById("map");
+    let svgEl = document.getElementsByClassName("mindmap-svg")[0];
     
     let mindmap = new MindMap(svgEl,data);
     mindmap.renderMap();
