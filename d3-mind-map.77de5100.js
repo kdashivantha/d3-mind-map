@@ -28902,7 +28902,7 @@ var d3_1 = require("d3");
 
 
 var bindData = function bindData(root, data, tag) {
-  return root.append('g').selectAll(tag).data(data).enter().append(tag);
+  return root.append("g").selectAll(tag).data(data).enter().append(tag);
 };
 /**
  * Bind connections to PATH tags on the given SVG
@@ -28910,7 +28910,7 @@ var bindData = function bindData(root, data, tag) {
 
 
 exports.d3Connections = function (svg, connections) {
-  return bindData(svg, connections, 'path').attr('class', 'mindmap-connection');
+  return bindData(svg, connections, "path").attr("class", "mindmap-connection");
 };
 /* eslint-disable no-param-reassign */
 
@@ -28921,10 +28921,10 @@ exports.d3Connections = function (svg, connections) {
 
 
 exports.d3Nodes = function (svg, nodes) {
-  var selection = svg.append('g').selectAll('foreignObject').data(nodes).enter();
-  var d3nodes = selection.append('foreignObject').attr('class', 'mindmap-node').attr('width', function (node) {
+  var selection = svg.append("g").selectAll("foreignObject").data(nodes).enter();
+  var d3nodes = selection.append("foreignObject").attr("class", "mindmap-node").attr("width", function (node) {
     return node.width + 4;
-  }).attr('height', function (node) {
+  }).attr("height", function (node) {
     return node.height;
   }).html(function (node) {
     return node.html;
@@ -28940,15 +28940,15 @@ exports.d3Nodes = function (svg, nodes) {
 
 exports.onTick = function (conns, nodes) {
   var d = function d(conn) {
-    return ['M', conn.source.x, ',', conn.source.y, ' ', 'C', (conn.source.x + conn.target.x) / 2, ',', conn.source.y, ' ', (conn.source.x + conn.target.x) / 2, ',', conn.target.y, ' ', conn.target.x, ',', conn.target.y].join('');
+    return ["M", conn.source.x, ",", conn.source.y, " ", "C", (conn.source.x + conn.target.x) / 2, ",", conn.source.y, " ", (conn.source.x + conn.target.x) / 2, ",", conn.target.y, " ", conn.target.x, ",", conn.target.y].join("");
   }; // Set the connections path.
 
 
-  conns.attr('d', d); // Set nodes position.
+  conns.attr("d", d); // Set nodes position.
 
-  nodes.attr('x', function (node) {
+  nodes.attr("x", function (node) {
     return node.x - node.width / 2;
-  }).attr('y', function (node) {
+  }).attr("y", function (node) {
     return node.y - node.height / 2;
   });
 };
@@ -28978,7 +28978,7 @@ exports.d3Drag = function (simulation, svg, nodes) {
     }
   };
 
-  return d3_1.drag().on('start', dragStart).on('drag', dragged).on('end', dragEnd);
+  return d3_1.drag().on("start", dragStart).on("drag", dragged).on("end", dragEnd);
 };
 /*
  * Return pan and zoom behavior to use on d3.selection.call().
@@ -28986,8 +28986,8 @@ exports.d3Drag = function (simulation, svg, nodes) {
 
 
 exports.d3PanZoom = function (el) {
-  return d3_1.zoom().scaleExtent([0.3, 5]).on('zoom', function () {
-    return el.selectAll('svg > g').attr('transform', d3_1.event.transform);
+  return d3_1.zoom().scaleExtent([0.3, 5]).on("zoom", function () {
+    return el.selectAll("svg > g").attr("transform", d3_1.event.transform);
   });
 };
 /*
@@ -29000,17 +29000,17 @@ exports.d3NodeClick = function (d, i) {
   var target = d3_1.event.target;
 
   switch (target.className) {
-    case 'fas fa-plus-circle':
-      return 'add';
+    case "fas fa-plus-circle":
+      return "add";
 
-    case 'fas fa-pencil-alt':
-      return 'edit';
+    case "fas fa-pencil-alt":
+      return "edit";
 
-    case 'fas fa-trash-alt':
-      return 'remove';
+    case "fas fa-trash-alt":
+      return "remove";
 
-    case 'node-text':
-      return 'click';
+    case "node-text":
+      return "click";
       break;
   }
 };
@@ -29354,7 +29354,7 @@ function () {
     var render = function render(node) {
       node.uid = uuid_1.default();
       node.html = nodeToHTML_1.default(node);
-      var dimensions = dimensions_1.getDimensions(node.html, {}, 'mindmap-node'); //@ts-ignore
+      var dimensions = dimensions_1.getDimensions(node.html, {}, "mindmap-node"); //@ts-ignore
 
       node.width = dimensions.width; //@ts-ignore
 
@@ -29374,14 +29374,14 @@ function () {
   MindMap.prototype.prepareEditor = function (svg, conns, nodes) {
     var _this = this;
 
-    nodes.attr('class', 'mindmap-node mindmap-node--editable').attr('id', function (d) {
+    nodes.attr("class", "mindmap-node mindmap-node--editable").attr("id", function (d) {
       return d.uid;
-    }).on('dbclick', function (node) {
+    }).on("dbclick", function (node) {
       node.fx = null;
       node.fy = null;
     });
     nodes.call(d3_2.d3Drag(this.simulation, svg, nodes));
-    nodes.on('click', function (d, i) {
+    nodes.on("click", function (d, i) {
       _this.nodeClickEvent(d3_2.d3NodeClick(d, i), d);
     }); // Tick the simulation 100 times
 
@@ -29390,7 +29390,7 @@ function () {
     }
 
     setTimeout(function () {
-      _this.simulation.alphaTarget(0.5).on('tick', function () {
+      _this.simulation.alphaTarget(0.5).on("tick", function () {
         return d3_2.onTick(conns, nodes);
       });
     }, 200);
@@ -29403,23 +29403,23 @@ function () {
   MindMap.prototype.renderMap = function () {
     // Create force simulation to position nodes that have
     // no coordinate, and add it to the component state
-    this.simulation = d3_1.forceSimulation().force('link', d3_1.forceLink().id(function (node) {
+    this.simulation = d3_1.forceSimulation().force("link", d3_1.forceLink().id(function (node) {
       return node.id;
-    })).force('charge', d3_1.forceManyBody()).force('collide', d3_1.forceCollide().radius(200));
+    })).force("charge", d3_1.forceManyBody()).force("collide", d3_1.forceCollide().radius(200));
     var svg = d3_1.select(this.svg); // Clear the SVG in case there's stuff already there.
 
-    svg.selectAll('*').remove(); // Add subnode group
+    svg.selectAll("*").remove(); // Add subnode group
 
-    svg.append('g').attr('id', 'mindmap-subnodes');
+    svg.append("g").attr("id", "mindmap-subnodes");
     this.prepareNodes(); // Bind data to SVG elements and set all the properties to render them
 
     var connections = d3_2.d3Connections(svg, this.connections);
     var nodes = d3_2.d3Nodes(svg, this.nodes).nodes;
-    nodes.append('title').text(function (node) {
+    nodes.append("title").text(function (node) {
       return node.uid;
     }); // Bind nodes and connections to the simulation
 
-    this.simulation.nodes(this.nodes).force('link').links(this.connections);
+    this.simulation.nodes(this.nodes).force("link").links(this.connections);
 
     if (this.editable) {
       this.prepareEditor(svg, connections, nodes);
@@ -29431,7 +29431,7 @@ function () {
     }
 
     d3_2.onTick(connections, nodes);
-    svg.attr('viewBox', dimensions_1.getViewBox(nodes.data())).call(d3_2.d3PanZoom(svg)).on('dbClick.zoom', null);
+    svg.attr("viewBox", dimensions_1.getViewBox(nodes.data())).call(d3_2.d3PanZoom(svg)).on("dbClick.zoom", null);
   };
   /**
    * node mouse click events
@@ -29440,19 +29440,19 @@ function () {
 
   MindMap.prototype.nodeClickEvent = function (event, node) {
     switch (event) {
-      case 'add':
+      case "add":
         this.addNewNode(node);
         break;
 
-      case 'edit':
+      case "edit":
         this.editNode(node);
         break;
 
-      case 'remove':
+      case "remove":
         this.removeNode(node);
         break;
 
-      case 'click':
+      case "click":
         this.clickNode(node);
         break;
     }
